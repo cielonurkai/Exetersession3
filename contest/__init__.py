@@ -43,6 +43,11 @@ class Player(BasePlayer):
         self.cost_per_ticket = C.COST_PER_TICKET
 
 
+    @property
+    def coplayer(self):
+        return self.group.get_player_by_id(3 - self.id_in_group)
+
+
 #def creating_session(subsession): # then you don't need the SetupRound anymore
     #subsession.setup_round()
 

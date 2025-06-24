@@ -4,6 +4,8 @@
 {{ block content }}
 
 You purchased {{ player.tickets_purchased }} tickets.
+The other player purchased {{ player.coplayer.tickets_purchased }} tickets.
+
     {{ next_button }}
 
 {{ endblock }}

@@ -1,0 +1,15 @@
+{{ block title }}
+    Decision
+{{ endblock }}
+{{ block content }}
+
+Your endowment is {{ player.endowment }}.
+Each ticket costs {{ player.cost_per_ticket }}.
+The prize is worth {{ group.prize }}.
+
+
+
+    {{ formfields }}
+    {{ next_button }}
+
+{{ endblock }}

@@ -28,6 +28,15 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc=""
 )
 
+SESSION_CONFIGS = [
+    {
+        'name': 'contest_demo',
+        'app_sequence': ['contest'],
+        'num_demo_participants': 2,
+    },
+]
+
+
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
 

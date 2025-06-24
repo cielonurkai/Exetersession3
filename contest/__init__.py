@@ -23,13 +23,32 @@ class Subsession(BaseSubsession):
         for group in self.get_groups():
             group.setup_round()
 
+    def compute_outcome(self):
+        for group in self.get_groups():
+            group.compute_outcome()
+
 class Group(BaseGroup):
     prize = models.CurrencyField()
+
 
     def setup_round(self):
         self.prize = C.PRIZE
         for player in self.get_players():
             player.setup_round()
+
+    def compute_outcome(self):
+        total = sum(player.tickets_purchased for player in self.get_players())
+        for player in self.get_players():
+            try:
+                 player.prize_won = player.tickets_purchased / total
+            except ZeroDivisionError:
+                 player.prize_won = 1 / len(self.get_players())
+            player.earnings = (
+                player.endowment -
+                player.tickets_purchased * player.cost_per_ticket +
+                self.prize * player.prize_won
+            )
+
 
 
 
@@ -37,15 +56,23 @@ class Player(BasePlayer):
     endowment = models.CurrencyField()
     cost_per_ticket = models.CurrencyField()
     tickets_purchased = models.IntegerField()
+    prize_won = models.FloatField()
+    earnings = models. CurrencyField()
 
     def setup_round(self):
         self.endowment = C.ENDOWMENT
         self.cost_per_ticket = C.COST_PER_TICKET
 
 
-    @property
+    @property #property is usually very short, 2-3 lines, instead of long
     def coplayer(self):
         return self.group.get_player_by_id(3 - self.id_in_group)
+    # @property lets you access a method like an attribute — without using parentheses
+    # Now you can just write:
+    # player.coplayer with no parentheses
+
+
+
 
 
 #def creating_session(subsession): # then you don't need the SetupRound anymore
@@ -71,11 +98,16 @@ class Decision(Page):
 
 
 class ResultsWaitPage(WaitPage):
-    pass
+    wait_for_all_groups = True
+
+    @staticmethod
+    def after_all_players_arrive(subsession):
+        subsession.compute_outcome()
 
 
 class Results(Page):
     pass
+# almost don't use vars something
 
 
 class EndBlock(Page):

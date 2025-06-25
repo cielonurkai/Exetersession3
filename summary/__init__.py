@@ -7,7 +7,7 @@ Your app description
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'sumary'
+    NAME_IN_URL = 'summary'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
@@ -35,7 +35,7 @@ class CollectResults(WaitPage):
     wait_for_all_groups = True
 
     @staticmethod
-    def after_all_player_arrive(subsession):
+    def after_all_players_arrive(subsession):
         subsession.collect_results()
 
 
@@ -46,4 +46,7 @@ class Summary(Page):
 
 
 
-page_sequence = [Summary]
+page_sequence = [
+    CollectResults,
+    Summary,
+]

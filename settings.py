@@ -53,7 +53,7 @@ dict(
 dict(
         name="summary",
         app_sequence=[
-            "sumary"
+            "summary"
         ],
         num_demo_participants=2,
     ),

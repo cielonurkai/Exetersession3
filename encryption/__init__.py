@@ -39,7 +39,7 @@ class Player(BasePlayer):
             and
             self.response_2 == self.subsession.lookup_dict[self.subsession.word[1]]
         )
-        if self.iscorrect:
+        if self.is_correct:
             self.payoff = self.subsession.payment_per_correct
 
 def creating_session(subsession):

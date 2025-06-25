@@ -50,6 +50,13 @@ dict(
         ],
         num_demo_participants=2,
     ),
+dict(
+        name="summary",
+        app_sequence=[
+            "sumary"
+        ],
+        num_demo_participants=2,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

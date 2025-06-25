@@ -81,6 +81,8 @@ class Group(BaseGroup):
             self.compute_outcome_share()
         elif self.subsession.csf == "allpay":
             self.compute_outcome_allpay()
+        elif self.subsession.csf == "lottery":
+            self.compute_outcome_lottery()
         for player in self.get_players():
                 player.earnings = (
                 player.endowment -

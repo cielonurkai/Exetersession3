@@ -122,7 +122,9 @@ class SetupRound(WaitPage):
 
 
 class Intro(Page):
-    pass
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 
 
 class Decision(Page):
@@ -163,7 +165,9 @@ class Results(Page):
 
 
 class EndBlock(Page):
-    pass
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
 
 
 page_sequence = [

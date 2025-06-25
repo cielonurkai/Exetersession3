@@ -42,6 +42,8 @@ class Group(BaseGroup):
     def compute_outcome_lottery(self):
         winner = random.choices(self.get_players(), k=1,
                                 weights=[p.tickets_purchased for p in self.get_players()])[0]
+        except ValueError:
+        winner = random.choice(self.get_players())
         for player in self.get_players():
             player.prize_won = 1 if player == winner else 0
 

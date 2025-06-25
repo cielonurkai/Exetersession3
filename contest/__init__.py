@@ -19,7 +19,7 @@ class Subsession(BaseSubsession):
     is_paid = models.BooleanField()
 
     def setup_round(self):
-        self.is_paid = True # we pay every round at this moment
+        self.is_paid = self.round_number % 2 == 1 # now paid the odd number; True means we pay every round at this moment
         for group in self.get_groups():
             group.setup_round()
 
@@ -48,6 +48,8 @@ class Group(BaseGroup):
                 player.tickets_purchased * player.cost_per_ticket +
                 self.prize * player.prize_won
             )
+            if self.subsession.is_paid:  #subsession.round_number % 2 == 1:
+                player.payoff = player.earnings # payoff is set by otree.
 
 
 

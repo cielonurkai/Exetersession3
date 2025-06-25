@@ -55,7 +55,8 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     endowment = models.CurrencyField()
     cost_per_ticket = models.CurrencyField()
-    tickets_purchased = models.IntegerField()
+    tickets_purchased = models.IntegerField() # can do IntegerField(min=0, max=100) but only when you are certain about the number
+    # max_tickets_affordable = models.IntegerField() but better use the property
     prize_won = models.FloatField()
     earnings = models. CurrencyField()
 
@@ -70,6 +71,10 @@ class Player(BasePlayer):
     # @property lets you access a method like an attribute — without using parentheses
     # Now you can just write:
     # player.coplayer with no parentheses
+
+    @property
+    def max_tickets_affordable(self):
+        return int(self.endowment / self.cost_per_ticket)
 
 
 
@@ -100,9 +105,20 @@ class Decision(Page):
     def error_message(player, values):
         if values["tickets_purchased"] < 0:
             return "You cannot buy a negative number of tickets."
-        if values["tickets_purchased"] > int(player.endowment / player.cost_per_ticket):
-            return "You cannot buy a ticket thst exceeds your endowment."
+        if values["tickets_purchased"] > player.max_tickets_affordable: #it's now a property
+            return (
+                "Buying {values['tickets_purchased']} tickets would cost" # single quotes
+                # This is a regular string.
+                # It has no f prefix, so Python does not evaluate the {...}.
+                # It's just text — the curly braces and the dictionary access inside will not be evaluated.
+                f"{values['tickets_purchased'] * player.cost_per_ticket}"
+                # This is an f-string (formatted string literal).
+                # Python evaluates everything inside the {}.
+                # It computes the actual multiplication result and inserts it into the string.
+                f"which is more than your endowment of {player.endowment}." # in Python, you can split the sentences and Python will automatically fix that into a whole sentence.
+            )
         return None # optional
+    # If you don’t explicitly write return None, Python will automatically return None by default when a function reaches the end without hitting a return statement.
 
 
 class ResultsWaitPage(WaitPage):

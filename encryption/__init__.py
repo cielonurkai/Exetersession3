@@ -30,6 +30,11 @@ class Subsession(BaseSubsession):
             lookup[letter] = self.lookup_table.index(letter)
         return lookup
 
+    @property
+    def correct_response(self):
+        return [self.lookup_dict[letter] for letter in self.word]
+
+
 class Group(BaseGroup):
     pass
 
@@ -39,12 +44,17 @@ class Player(BasePlayer):
     response_2 = models.IntegerField()
     is_correct = models.BooleanField()
 
+    @property
+    def response(self):
+        return [self.response_1, self.response_2]
+
     def check_response(self):
-        self.is_correct = (
-            self.response_1 == self.subsession.lookup_dict[self.subsession.word[0]] # 0 is the first word A = 1
-            and
-            self.response_2 == self.subsession.lookup_dict[self.subsession.word[1]] # 1 is the second word B = 2
-        )
+        self.is_correct = self.response == self.subsession.correct_response
+        #(
+            #self.response_1 == self.subsession.lookup_dict[self.subsession.word[0]] # 0 is the first word A = 1
+           # and
+            #self.response_2 == self.subsession.lookup_dict[self.subsession.word[1]] # 1 is the second word B = 2
+        #) # we can write it but that's going to be very long. Can we just make a list?
         if self.is_correct:
             self.payoff = self.subsession.payment_per_correct
 

@@ -30,7 +30,8 @@ class Subsession(BaseSubsession):
 
     def setup_round(self):
         if self.round_number == 1:
-            random.seed(12345678) # to guarantee that everyone generates the same words
+            self.random_seed = self.session.config.get("random_seed", 123435678)
+            random.seed(self.random_seed)
         self.payment_per_correct = Currency(0.10)
         self.time_for_task = C.TIME_FOR_TASK
         self.lookup_table = C.LOOKUP_TABLES[(self.round_number - 1) % 3]

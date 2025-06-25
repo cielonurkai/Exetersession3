@@ -17,9 +17,11 @@ class C(BaseConstants):
 
 class Subsession(BaseSubsession):
     is_paid = models.BooleanField()
+    csf = models.StringField(choices=["share", "allpay"])
 
     def setup_round(self):
         self.is_paid = self.round_number % 2 == 1 # now paid the odd number; True means we pay every round at this moment
+        self.csf = "share"
         for group in self.get_groups():
             group.setup_round()
 
@@ -36,7 +38,7 @@ class Group(BaseGroup):
         for player in self.get_players():
             player.setup_round()
 
-    def compute_outcome(self):
+    def compute_outcome_share(self):
         total = sum(player.tickets_purchased for player in self.get_players())
         for player in self.get_players():
             try:
@@ -51,8 +53,32 @@ class Group(BaseGroup):
             if self.subsession.is_paid:  #subsession.round_number % 2 == 1:
                 player.payoff = player.earnings # payoff is set by otree.
 
+    def compute_outcome_allpay(self):
+        max_tickets = max(player.tickets_purchased for player in self.get_players())
+        num_tied = len([
+            player for player in self.get_players()
+                       if player.tickets_purchased == max_tickets])
+        for player in self.get_players():
+            if player.tickets_purchased == max_tickets:
+                player.prize_won = 1 / num_tied
+            else:
+                player.prize_won = 0
 
 
+
+    def compute_outcome(self):
+        if self.subsession.csf == "share":
+            self.compute_outcome_share()
+        elif self.subsession.csf == "allpay":
+            self.compute_outcome_allpay()
+        for player in self.get_players():
+                player.earnings = (
+                player.endowment -
+                player.tickets_purchased * player.cost_per_ticket +
+                self.prize * player.prize_won
+        )
+        if self.subsession.is_paid:
+            player.payoff = player.earnings
 
 class Player(BasePlayer):
     endowment = models.CurrencyField()

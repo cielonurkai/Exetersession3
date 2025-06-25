@@ -29,8 +29,8 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    response_1 = models.IntField()
-    response_2 = models.IntField()
+    response_1 = models.IntegerField()
+    response_2 = models.IntegerField()
 
 
 def creating_session(subsession):

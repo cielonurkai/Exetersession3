@@ -14,15 +14,20 @@ class C(BaseConstants):
 
 class Subsession(BaseSubsession):
     payment_per_correct = models.CurrencyField()
+    lookup_table = models.StringField()
     word = models.StringField()
 
     def setup_round(self):
         self.payment_per_correct = Currency(0.10)
+        self.lookup_table = "AB"
         self.word = "AB"
 
     @property
     def lookup_dict(self):
-        return {"A": 1, "B": 2}
+        lookup = {}
+        for letter in ["A", "B"]:
+            lookup[letter] = self.lookup_table.index(letter)
+        return lookup
 
 class Group(BaseGroup):
     pass

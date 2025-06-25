@@ -104,7 +104,8 @@ class Player(BasePlayer):
     def max_tickets_affordable(self):
         return int(self.endowment / self.cost_per_ticket)
 
-
+    def in_paid_rounds(self):
+        return [rd for rd in self.in_all_rounds() if rd.subsession.is_paid]
 
 
 

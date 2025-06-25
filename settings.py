@@ -33,6 +33,15 @@ dict(
         contest_csf="share",
         contest_endowment=9,
     ),
+dict(
+        name="contest_lottery",
+        app_sequence=[
+            "contest"
+        ],
+        num_demo_participants=2,
+        contest_csf="lottery",
+        #contest_endowment=9,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

@@ -1,3 +1,4 @@
+import string
 from otree.api import *
 
 
@@ -25,7 +26,7 @@ class Subsession(BaseSubsession):
     @property
     def lookup_dict(self):
         lookup = {}
-        for letter in ["A", "B"]:
+        for letter in string.ascii_uppercase: # the whole 26 alphabets
             lookup[letter] = self.lookup_table.index(letter)
         return lookup
 

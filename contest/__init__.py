@@ -26,6 +26,8 @@ class Subsession(BaseSubsession):
             self.setup_paid_rounds()
         #self.is_paid = self.round_number % 2 == 1 # now paid the odd number; True means we pay every round at this moment
         self.csf = self.session.config["contest_csf"]
+        if self.session.config.get("contest_group_randomly", False):
+                self.group_randomly()
         for group in self.get_groups():
             group.setup_round()
 

@@ -30,11 +30,11 @@ class Subsession(BaseSubsession):
 
     def setup_round(self):
         if self.round_number == 1:
-            random.seed(12345678)
+            random.seed(12345678) # to guarantee that everyone generates the same words
         self.payment_per_correct = Currency(0.10)
         self.time_for_task = C.TIME_FOR_TASK
         self.lookup_table = C.LOOKUP_TABLES[(self.round_number - 1) % 3]
-        self.word = ",".join(random.choices(string.ascii_lowercase, k=5))
+        self.word = ",".join(random.choices(string.ascii_uppercase, k=5))
 
     @property
     def lookup_dict(self):

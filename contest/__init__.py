@@ -21,7 +21,7 @@ class Subsession(BaseSubsession):
 
     def setup_round(self):
         self.is_paid = self.round_number % 2 == 1 # now paid the odd number; True means we pay every round at this moment
-        self.csf = "share"
+        self.csf = self.session.config["contest_csf"]
         for group in self.get_groups():
             group.setup_round()
 
@@ -89,7 +89,7 @@ class Player(BasePlayer):
     earnings = models. CurrencyField()
 
     def setup_round(self):
-        self.endowment = C.ENDOWMENT
+        self.endowment = self.session.config.get("contest_endowment", C.ENDOWMENT)
         self.cost_per_ticket = C.COST_PER_TICKET
 
 

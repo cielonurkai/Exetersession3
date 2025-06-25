@@ -15,6 +15,24 @@ SESSION_CONFIGS = [
         ],
         num_demo_participants=3,
     ),
+dict(
+        name="contest_allpay",
+        app_sequence=[
+            "contest"
+        ],
+        num_demo_participants=2,
+        contest_csf="allpay",
+        #contest_endowment=9,
+    ),
+dict(
+        name="contest_share",
+        app_sequence=[
+            "contest"
+        ],
+        num_demo_participants=2,
+        contest_csf="share",
+        contest_endowment=9,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -28,13 +46,6 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc=""
 )
 
-SESSION_CONFIGS = [
-    {
-        'name': 'contest_demo',
-        'app_sequence': ['contest'],
-        'num_demo_participants': 2,
-    },
-]
 
 
 PARTICIPANT_FIELDS = []

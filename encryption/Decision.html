@@ -4,9 +4,28 @@
 
 {{ block content }}
 
-the table is {{ subsession.lookup_dict }}.
 
-the word is {{ subsession.word }}.
+<table class="table">
+    <thead>
+      <tr class="text-center fw-bold">
+          {{ for letter in subsession.lookup_dict.keys }}
+          <td>{{ letter }}</td>
+          {{ endfor }}
+
+      </tr>
+
+    </thead>
+    <tbody>
+     <tr class="text-center">
+         {{ for value in subsession.lookup_dict.values }}
+         <td>{{ value }}</td>
+         {{ endfor }}
+     </tr>
+    </tbody>
+</table>
+
+<p class="text-center fs-3">
+    The word is {{ subsession.word }}. </p>
 
    {{ formfields }}
     {{ next_button }}

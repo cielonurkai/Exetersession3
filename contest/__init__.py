@@ -168,7 +168,7 @@ class Decision(Page):
             return "You cannot buy a negative number of tickets."
         if values["tickets_purchased"] > player.max_tickets_affordable: #it's now a property
             return (
-                "Buying {values['tickets_purchased']} tickets would cost" # single quotes
+                f"Buying {values['tickets_purchased']} tickets would cost" # single quotes
                 # This is a regular string.
                 # It has no f prefix, so Python does not evaluate the {...}.
                 # It's just text — the curly braces and the dictionary access inside will not be evaluated.

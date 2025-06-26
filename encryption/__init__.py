@@ -91,14 +91,12 @@ class Player(BasePlayer):
     def get_time_remaining(self):
         return self.subsession.in_round(1).time_for_task - self.get_time_elapsed()
 
+    def creating_session(subsession):
+      subsession.setup_round() #subsession 1 (round 1)
+
     @property
     def total_payoff(self):
         return sum(p.payoff for p in self.in_all_rounds())
-
-
-def creating_session(subsession):
-    subsession.setup_round() #subsession 1 (round 1)
-
 
 # PAGES
 class Intro(Page):

@@ -1,0 +1,9 @@
+.range-hidden-slider::-webkit-slider-thumb {
+    /* for chrome, safari,edge */
+    opacity: 0;
+}
+
+.range-hidden-slider::-moz-range-thumb {
+    /* for firefox */
+    opacity: 0;
+}

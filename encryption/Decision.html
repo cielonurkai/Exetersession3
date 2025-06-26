@@ -8,14 +8,27 @@
     .word{
         color: dodgerblue;
         font-size: 2.5rem;
-        font-family: "Comic Sans MS"
+        font-family: "Comic Sans MS";
 
+
+    }
+    .otree-timer {
+        display: none;
+    }
+    .timer-block {
+        background: aliceblue;
     }
 </style>
 
 {{ endblock }}
 
 {{ block content }}
+
+<div class="row justify-content-center timer-block">
+    <div class="col text-center p-2">
+        You have &#9203; <span class="fw-bold otree-timer__time-left"></span> remaining to encrypt words.
+    </div>
+</div>
 
 
 <table class="table">

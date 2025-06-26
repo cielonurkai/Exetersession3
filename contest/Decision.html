@@ -17,6 +17,9 @@
                $(this).removeClass("range-hidden-slider");
                $(".otree-btn-next").removeClass("btn-secondary").addClass("btn-primary").prop("disabled", false);
            });
+               $(document).on('change', "[type=change]", function(){
+                   $("#id_values_clicked").val($("#id_values_clicked").val() + "," + $(this).val());
+               });
        });
    </script>
 {{ endblock }}
@@ -30,7 +33,9 @@
 <li>The prize is worth {{ group.prize }}.</li>
 </ul>
 
-<input type="range" class="form-range" min="0" max="{{ player.max_tickets_affordable }}" name="tickets_purchased">
+
+<input type="hidden" id="id_values_clicked" name="values_clicked" value="">
+<input type="range" class="form-range range-hidden-slider" min="0" max="{{ player.max_tickets_affordable }}" name="tickets_purchased">
 
 <p class="text-center">
     Number of tickets selected to purchase:

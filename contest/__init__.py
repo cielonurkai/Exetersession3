@@ -113,6 +113,7 @@ class Player(BasePlayer):
     # max_tickets_affordable = models.IntegerField() but better use the property
     prize_won = models.FloatField()
     earnings = models. CurrencyField()
+    values_clicked = models.StringField()
 
     def setup_round(self):
         self.endowment = self.session.config.get("contest_endowment", C.ENDOWMENT)
@@ -160,7 +161,7 @@ class Intro(Page):
 
 class Decision(Page):
     form_model = "player"
-    form_fields = ["tickets_purchased"]
+    form_fields = ["tickets_purchased", "values_clicked"]
 
     @staticmethod
     def error_message(player, values):
